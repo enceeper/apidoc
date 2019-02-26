@@ -5,6 +5,7 @@
 The [Enceeper App](https://github.com/enceeper/enceeper) is using the service in the following way:
 
 - All data are first encrypted locally and then transmitted over the network.
+- The password of the user is never transmitted, but is used locally to compute a proof-of-knowledge.
 - Moreover, a user has the option to "share" those secrets with other users of the service by adding slots to selected entries.
 - Finally, any third party can use the API of the service to enhance the core functionality.
 
@@ -21,7 +22,7 @@ The current API version is: **1.0.0** and the base URL of the service is: [https
 
 The API uses [HTTP response codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) to indicate success or failure of requests. Specifically, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided arguments (e.g. instead of an integer a string is provided) and 5xx error codes indicate an internal Enceeper error.
 
-> There is only one error that can be handled in a special way, the 403 error. This error is generated when the auth token has expired and the user needs to re-authenticate. The client can then check for this error and re-authenticate the user without requiring user interaction.
+> There is only one error that can be handled in a special way, the 403 error. This error is generated when the auth token has expired and the user needs to re-authenticate. The client can then check for this error and re-authenticate the user without requiring any interaction.
 
 All inputs and outputs follow the JSON format and based on whether the outcome of an API call was sucessfull or not we have the following response templates:
 
@@ -58,12 +59,12 @@ The summary of the API calls is:
 |-----------------------------------------------------|--------|-----------------------------------|
 | [Test call](#test-call)                             | GET    | /                                 |
 | [User registration](#user-registration)             | POST   | /user                             |
-| [Edit user](#edit-user)*                            | PUT    | /user                             |
-| [Delete user](#delete-user)*                        | DELETE | /user                             |
 | [Initiate auth procedure](#initiate-auth-procedure) | POST   | /user/challenge                   |
 | [Authenticate user](#authenticate-user)             | POST   | /user/login                       |
 | [Get specific key](#get-specific-key)               | GET    | /user/slots/{identifier}          |
 | [Check for key approval](#check-for-key-approval)   | GET    | /user/slots/check/{ref}           |
+| [Edit user](#edit-user)*                            | PUT    | /user                             |
+| [Delete user](#delete-user)*                        | DELETE | /user                             |
 | [Get account keys](#get-account-keys)*              | GET    | /user/keys                        |
 | [Create new key](#create-new-key)*                  | POST   | /user/keys                        |
 | [Edit key](#edit-key)*                              | PUT    | /user/keys/{keyId}                |
@@ -109,27 +110,7 @@ Create a new user in the Enceeper service. The following constrains are in place
 | Input  | {<br>&nbsp;"email": "enceeper@example.com",<br>&nbsp;"auth": {<br>&nbsp;&nbsp;"srp6a": {<br>&nbsp;&nbsp;&nbsp;"salt": "hex salt",<br>&nbsp;&nbsp;&nbsp;"verifier": "hex verifier"<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;...<br>&nbsp;&nbsp;"keys": {<br>&nbsp;&nbsp;&nbsp;"pub": "the public key of the user used in key sharing",<br>&nbsp;&nbsp;&nbsp;...<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;...<br>&nbsp;}<br>}|
 | Output | -|
 
-> The Enceeper service is utilizing the [SRP6a protocol](http://srp.stanford.edu/design.html) for user registration and authentication. In the future we may provide additional protocols (i.e. SPAKE2).
-
-### Edit user
-
-Update user details. For the **auth** object the same constrains are in place as described above in the **User registration** section.
-
-| Type   | Value|
-|--------|-|
-| URL    | /user|
-| Method | PUT|
-| Input  | {<br>&nbsp;"auth": {<br>&nbsp;&nbsp;"srp6a": {<br>&nbsp;&nbsp;&nbsp;"salt": "hex salt",<br>&nbsp;&nbsp;&nbsp;"verifier": "hex verifier"<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;...<br>&nbsp;&nbsp;"keys": {<br>&nbsp;&nbsp;&nbsp;"pub": "the public key of the user used in key sharing",<br>&nbsp;&nbsp;&nbsp;...<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;...<br>&nbsp;}<br>}|
-| Output | -|
-
-### Delete user
-
-| Type   | Value|
-|--------|-|
-| URL    | /user|
-| Method | DELETE|
-| Input  | -|
-| Output | -|
+> The Enceeper service is utilizing the [SRP6a protocol](http://srp.stanford.edu/design.html) for user registration and authentication. In the future we may support additional protocols (i.e. SPAKE2).
 
 ### Initiate auth procedure
 
@@ -203,6 +184,26 @@ Check if the provided **ref** has been approved or not. If it has not been appro
 | Input  | -|
 | Output | {<br>&nbsp;"slot": "string encrypted slot",<br>&nbsp;"meta": "string encrypted meta",<br>&nbsp;"value": "string encrypted value"<br>}|
 
+### Edit user
+
+Update user details. For the **auth** object the same constrains are in place as described above in the **User registration** section.
+
+| Type   | Value|
+|--------|-|
+| URL    | /user|
+| Method | PUT|
+| Input  | {<br>&nbsp;"auth": {<br>&nbsp;&nbsp;"srp6a": {<br>&nbsp;&nbsp;&nbsp;"salt": "hex salt",<br>&nbsp;&nbsp;&nbsp;"verifier": "hex verifier"<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;...<br>&nbsp;&nbsp;"keys": {<br>&nbsp;&nbsp;&nbsp;"pub": "the public key of the user used in key sharing",<br>&nbsp;&nbsp;&nbsp;...<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;...<br>&nbsp;}<br>}|
+| Output | -|
+
+### Delete user
+
+| Type   | Value|
+|--------|-|
+| URL    | /user|
+| Method | DELETE|
+| Input  | -|
+| Output | -|
+
 ### Get account keys
 
 ### Create new key
@@ -211,13 +212,36 @@ Check if the provided **ref** has been approved or not. If it has not been appro
 
 ### Delete key
 
+| Type   | Value|
+|--------|-|
+| URL    | /user/keys/{keyId}|
+| Method | DELETE|
+| Input  | -|
+| Output | -|
+
 ### Create new slot
 
 ### Edit slot
 
 ### Delete slot
 
+| Type   | Value|
+|--------|-|
+| URL    | /user/keys/{keyId}/slots/{slotId}|
+| Method | DELETE|
+| Input  | -|
+| Output | -|
+
 ### Search users
+
+Search for other users in the platform and retrieve their public key for key sharing.
+
+| Type   | Value|
+|--------|--------------------------------------------------------------------------------------|
+| URL    | /user/search|
+| Method | POST|
+| Input  | {<br>&nbsp;"email": "enceeper@example.com"<br>}|
+| Output | {<br>&nbsp;"sharePubKey": "hex pub key"<br>}|
 
 ### Create key share
 
@@ -225,5 +249,22 @@ Check if the provided **ref** has been approved or not. If it has not been appro
 
 ### Delete key share
 
+Deletes a request to share a slot.
+
+| Type   | Value|
+|--------|-|
+| URL    | /user/keys/shares/{shareId}|
+| Method | DELETE|
+| Input  | -|
+| Output | -|
+
 ## Rate limiting
 
+50 requests per hour (unauthenticated user)
+XX requests per hour based on user plan
+
+For details on the available plans visit: www.enceeper.com
+
+X-RateLimit-Limit     100
+X-RateLimit-Remaining 99
+X-RateLimit-Reset     1551173510
