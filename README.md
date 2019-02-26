@@ -1,6 +1,14 @@
 # What is Enceeper?
 
-Enceeper is a service used to store and organize users’ passwords and secrets. It provides high levels of security since users’ information is not directly stored to the service. All data are first encrypted locally and then transmitted over the network. Moreover, a user has the option to "share" those secrets with other users of the service by adding slots to selected entries. Finally, any third party can use the API of the service to enhance the core functionality. To this end we have developed two solutions:
+[Enceeper](https://www.enceeper.com/) is a service used to store and organize users’ passwords and secrets. It provides high level of security since users’ information is not directly stored to the service.
+
+The [Enceeper App](https://github.com/enceeper/enceeper) is using the service in the following way:
+
+- All data are first encrypted locally and then transmitted over the network.
+- Moreover, a user has the option to "share" those secrets with other users of the service by adding slots to selected entries.
+- Finally, any third party can use the API of the service to enhance the core functionality.
+
+To this end we have developed two solutions:
 
 - [enceeper-phpconf](https://github.com/enceeper/enceeper-phpconf) to store configuration information in Enceeper and have it delivered to a PHP application
 - [enceeper-boot](https://github.com/enceeper/enceeper-boot) for unattended booting a GNU/Linux distro via Initramfs utilizing Enceeper
@@ -186,6 +194,15 @@ And the user must call the **Check for key approval** with the provided **ref** 
 
 ### Check for key approval
 
+Check if the provided **ref** has been approved or not. If it has not been approved an error is returned (HTTP status code 428). If the request was approved by the slot owner the **slot**, **meta** and **value** keys are populated. For details on the **ref** parameter read the **Get specific key** API call above.
+
+| Type   | Value|
+|--------|-|
+| URL    | /user/slots/check/{ref}|
+| Method | GET|
+| Input  | -|
+| Output | {<br>&nbsp;"slot": "string encrypted slot",<br>&nbsp;"meta": "string encrypted meta",<br>&nbsp;"value": "string encrypted value"<br>}|
+
 ### Get account keys
 
 ### Create new key
@@ -210,11 +227,3 @@ And the user must call the **Check for key approval** with the provided **ref** 
 
 ## Rate limiting
 
-50 requests per hour (unauthenticated user)
-XX requests per hour based on user plan
-
-For details on the available plans visit: www.enceeper.com
-
-X-RateLimit-Limit     100
-X-RateLimit-Remaining 99
-X-RateLimit-Reset     1551173510
