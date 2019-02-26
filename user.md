@@ -9,7 +9,7 @@ Create a new user in the Enceeper service. The following constrains are in place
 - all the **auth.enceeper.xxx** keys are reserved and must not be used
 - the **auth.keys.pub** key is required and must contain the public key of the user to facilitate key sharing
 - You can place anything inside the **auth** object and it will be stored by the Enceeper service
-- The overall size of the **auth** object must not exceed the 12Kbytes
+- The overall size of the **auth** object must not exceed the 12Kbytes limit
 
 | Type   | Value|
 |--------|-|
@@ -33,7 +33,7 @@ The client will provide the user email and the Enceeper service will bootstrap t
 
 ### Authenticate user
 
-This API completes the proof of the SRP6a protocol with the provided information:
+This API call verifies the proof of the SRP6a protocol with the provided information:
 
 - The **ref** taken from the above procedure
 - The **A** and **M1** SRP6a protocol values
@@ -58,3 +58,23 @@ In the current implementation of the [Enceeper App](https://github.com/enceeper/
 | Method | POST|
 | Input  | {<br>&nbsp;"srp6a": {<br>&nbsp;&nbsp;"A": "hex A value",<br>&nbsp;&nbsp;"M1": "client proof",<br>&nbsp;&nbsp;"ref": "string ref"<br>&nbsp;}<br>}|
 | Output | {<br>&nbsp;"srp6a": {<br>&nbsp;&nbsp;"M2": "server proof"<br>&nbsp;},<br>&nbsp;"enceeper": {<br>&nbsp;&nbsp;"authToken": "the auth token"<br>&nbsp;&nbsp;"plan": { the plan details }<br>&nbsp;},<br>&nbsp;...<br>}|
+
+### Edit user
+
+Update user details. For the **auth** object the same constrains are in place as described above in the **User registration** section.
+
+| Type   | Value|
+|--------|-|
+| URL    | /user|
+| Method | PUT|
+| Input  | {<br>&nbsp;"auth": {<br>&nbsp;&nbsp;"srp6a": {<br>&nbsp;&nbsp;&nbsp;"salt": "hex salt",<br>&nbsp;&nbsp;&nbsp;"verifier": "hex verifier"<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;...<br>&nbsp;&nbsp;"keys": {<br>&nbsp;&nbsp;&nbsp;"pub": "the public key of the user used in key sharing",<br>&nbsp;&nbsp;&nbsp;...<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;...<br>&nbsp;}<br>}|
+| Output | -|
+
+### Delete user
+
+| Type   | Value|
+|--------|-|
+| URL    | /user|
+| Method | DELETE|
+| Input  | -|
+| Output | -|
