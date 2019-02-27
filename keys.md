@@ -74,7 +74,7 @@ Update the key details. The **meta** and **value** entries are optional and can 
 
 ### Create new slot
 
-Create a new slot for accessing the key. The **value** contains the encrypted random key of the key and check the key object outlined above in the **Get account keys** section for valid values of the **notify** flag.
+Create a new slot for accessing the key. The **value** contains the encrypted random key of the key. Check the key object outlined above in the **Get account keys** section for valid values of the **notify** flag.
 
 | Type   | Value|
 |--------|-|
