@@ -93,7 +93,7 @@ If this limit is exceeded, an error is returned: HTTP 429 (Too Many Requests).
 
 # Enceeper plans
 
-For details on the available plans visit: [www.enceeper.com](www.enceeper.com)
+For details on the available plans visit: [www.enceeper.com](https://www.enceeper.com/)
 
 The service imposes limits based on the user plan for the following items:
 - Requests per hour (see **rate limiting** above)
