@@ -12,7 +12,7 @@ In each key object the following information is available:
 - **updated_on**: a Unix epoch timestamp of when the key was last updated
 - **slots**: an array of access slots that hold the encrypted random key mentioned above
 - **slots[x].slot_id**: the slot Id
-- **slots[x].value**: the encrypted random key that was used for encrypting the meta and value above. Based on the slot type this random key will be encrypted either by the KEK of a user or a key derived from scrypt using an access password specific for this slot (or somethig else as it depents on the caller!)
+- **slots[x].value**: the encrypted random key that was used for encrypting the meta and value above. Based on the slot type this random key will be encrypted either by the KEK of a user or a key derived from scrypt using an access password specific for this slot (or something else as it depents on the caller!)
 - **slots[x].notify**: 0 means no action, 1 means report usage and 2 means wait for approval (applicable only for the **Get specific key** API call)
 - **slots[x].status**: 0 means enabled and 1 means disabled
 - **slots[x].identifier**: a unique identifier to access this slot via the **Get specific key** API call (not applicable on shared keys)
