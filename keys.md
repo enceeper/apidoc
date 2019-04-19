@@ -28,6 +28,7 @@ In each share object the following information is available:
 - **pub**: the public key of the sender
 - **slot**: the encrypted slot to be used when accepting this share
 - **status**: "new" for newly created shares and "old" for older share requests
+- **created_on**: a Unix epoch timestamp of when the share was created
 
 | Type   | Value|
 |--------|-|
