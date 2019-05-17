@@ -36,6 +36,14 @@ Sucess response:
       "two": "..."
     }
   },
+  "enceeper": {
+    "app": {
+      "version": "1.0.0"
+    },
+    "api": {
+      "deprecated": null
+    }
+  },
   "errorMessage": null
 }
 ```
@@ -47,9 +55,19 @@ Failed response:
 {
   "outcome":      "NOK",
   "result":       null,
+  "enceeper": {
+    "app": {
+      "version": "1.0.0"
+    },
+    "api": {
+      "deprecated": null
+    }
+  },
   "errorMessage": "API method not found"
 }
 ```
+
+The **enceeper.app.version** key contains the latest version of the [Enceeper App](https://github.com/enceeper/enceeper). The **enceeper.api.deprecated** key will be null if the API version being used is fully supported and contain a message if the API version will reach it's end-of-life. At that point the message will contain the necessary details.
 
 ## API calls
 
