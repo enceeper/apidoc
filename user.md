@@ -70,6 +70,17 @@ Update user details. For the **auth** object the same constrains are in place as
 | Input  | {<br>&nbsp;"auth": {<br>&nbsp;&nbsp;"srp6a": {<br>&nbsp;&nbsp;&nbsp;"salt": "hex salt",<br>&nbsp;&nbsp;&nbsp;"verifier": "hex verifier"<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;...<br>&nbsp;&nbsp;"keys": {<br>&nbsp;&nbsp;&nbsp;"pub": "the public key of the user used in key sharing",<br>&nbsp;&nbsp;&nbsp;...<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;...<br>&nbsp;}<br>}|
 | Output | -|
 
+### Retrieve web auth token
+
+The server must **never** receive your password. So in order to authenticate you to Enceeper via a web browser this special API call will create a unique One Time Password (OTP) for you to use and access your plan and billing details.
+
+| Type   | Value|
+|--------|-|
+| URL    | /user/webauth|
+| Method | GET|
+| Input  | -|
+| Output | {<br>&nbsp;"token": "the web auth token"<br>}|
+
 ### Delete user
 
 | Type   | Value|

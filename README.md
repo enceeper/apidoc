@@ -82,6 +82,7 @@ The summary of the API calls is:
 | [Get specific key](other.md#get-specific-key)               | GET    | /user/slots/{identifier}          |
 | [Check for key approval](other.md#check-for-key-approval)   | GET    | /user/slots/check/{ref}           |
 | [Edit user](user.md#edit-user)*                             | PUT    | /user                             |
+| [Retrieve web auth token](user.md#retrieve-web-auth-token)* | GET    | /user/webauth                     |
 | [Delete user](user.md#delete-user)*                         | DELETE | /user                             |
 | [Get account keys](keys.md#get-account-keys)*               | GET    | /user/keys                        |
 | [Create new key](keys.md#create-new-key)*                   | POST   | /user/keys                        |
