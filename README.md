@@ -18,7 +18,7 @@ To this end we have developed two solutions:
 
 In this document we describe the available API calls, the input they receive and the output they produce.
 
-The current API version is: **1.0.0** and the base URL of the service is: [https://www.enceeper.com/api/v1](https://www.enceeper.com/api/v1)
+The current API version is: **1.0.0** and the base URL of the service is: [https://www.enceeper.com/api/v1/](https://www.enceeper.com/api/v1/)
 
 The API uses [HTTP response codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) to indicate success or failure of requests. Specifically, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided arguments (e.g. instead of an integer a string is provided) and 5xx error codes indicate an internal Enceeper error.
 
