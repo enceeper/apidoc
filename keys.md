@@ -8,6 +8,7 @@ In each key object the following information is available:
 - **meta**: the encrypted meta of the password, encrypted with the same random key
 - **status**: 0 means enabled and 1 means disabled
 - **shared**: indicator if this a shared key
+- **with**: null or the email of the user that this key is shared with
 - **created_on**: a Unix epoch timestamp of when the key was created
 - **updated_on**: a Unix epoch timestamp of when the key was last updated
 - **slots**: an array of access slots that hold the encrypted random key mentioned above
@@ -17,6 +18,7 @@ In each key object the following information is available:
 - **slots[x].status**: 0 means enabled and 1 means disabled
 - **slots[x].identifier**: a unique identifier to access this slot via the **Get specific key** API call (not applicable on shared keys)
 - **slots[x].shared**: indicator if this a shared slot
+- **slots[x].with**: null or the email of the user that this key is shared with
 - **slots[x].created_on**: a Unix epoch timestamp of when the slot was created
 - **slots[x].updated_on**: a Unix epoch timestamp of when the slot was last updated
 
